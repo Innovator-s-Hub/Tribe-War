@@ -1,0 +1,44 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    margin: 20px auto;
+    max-width: 800px;
+}
+
+h1 {
+    font-size: 2rem;
+    color: #333;
+}
+
+.tribe-selection button {
+    margin: 10px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    border: 2px solid #333;
+    background-color: #fff;
+    transition: background-color 0.3s;
+}
+
+.tribe-selection button:hover {
+    background-color: #333;
+    color: #fff;
+}
+
+#gameCanvas {
+    border: 2px solid #333;
+    margin-top: 20px;
+    background-color: #fff;
+}
+
+#result {
+    margin-top: 20px;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
