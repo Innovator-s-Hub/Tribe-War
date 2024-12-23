@@ -3,21 +3,365 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tribe Battle</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Tribe Battle Game</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #2c3e50, #34495e);
+            color: #ecf0f1;
+            font-family: 'Verdana', sans-serif;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-top: 20px;
+            color: #f1c40f;
+            text-shadow: 2px 2px #34495e;
+        }
+
+        button {
+            font-size: 1.2rem;
+            margin: 10px;
+            padding: 15px 30px;
+            background: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background: #2980b9;
+        }
+
+        #gameContainer {
+            position: relative;
+            width: 90%;
+            max-width: 800px;
+            height: 600px;
+            margin: 30px auto;
+            border: 4px solid #ecf0f1;
+            border-radius: 10px;
+            background: #1abc9c;
+            overflow: hidden;
+        }
+
+        .character {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background-size: cover;
+            text-align: center;
+            color: #fff;
+            font-size: 0.8rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-shadow: 1px 1px #2c3e50;
+        }
+
+        .tech {
+            background-image: url('tech.png');
+        }
+
+        .creative {
+            background-image: url('creative.jpg');
+        }
+
+        .business {
+            background-image: url('business.png');
+        }
+
+        .impact {
+            background-image: url('impact.png');
+        }
+
+        .health-bar {
+            position: absolute;
+            width: 150px;
+            height: 10px;
+            background: #e74c3c;
+            border: 2px solid #ecf0f1;
+            border-radius: 5px;
+        }
+
+        .health-icon {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            top: -20px;
+            background-size: cover;
+        }
+
+        .tech-icon {
+            background-image: url('https://via.placeholder.com/30/3498db/ffffff?text=TT');
+        }
+
+        .creative-icon {
+            background-image: url('https://via.placeholder.com/30/e74c3c/ffffff?text=CT');
+        }
+
+        .business-icon {
+            background-image: url('https://via.placeholder.com/30/f1c40f/ffffff?text=BT');
+        }
+
+        .impact-icon {
+            background-image: url('https://via.placeholder.com/30/2ecc71/ffffff?text=IT');
+        }
+
+        .explosion {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background-image: url('https://via.placeholder.com/60/ff5733/ffffff?text=X');
+            background-size: cover;
+            animation: explode 0.5s ease-out;
+        }
+
+        @keyframes explode {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(2); opacity: 0; }
+        }
+
+        #winnerMessage {
+            font-size: 1.8rem;
+            margin-top: 20px;
+            color: #e67e22;
+        }
+
+        .control-buttons {
+            margin-top: 20px;
+        }
+
+        .control-buttons button {
+            font-size: 1.2rem;
+            margin: 5px;
+            padding: 10px 20px;
+            background: #8e44ad;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .control-buttons button:hover {
+            background: #7d3c98;
+        }
+
+        .celebration {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            text-align: center;
+        }
+        .balloons {
+            font-size: 2rem;
+            margin: 10px 0;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .glitter {
+            font-size: 2rem;
+            margin: 10px 0;
+            animation: sparkle 1s linear infinite;
+        }
+
+        @keyframes sparkle {
+            0% {
+                opacity: 0.5;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0.5;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Choose Your Tribe</h1>
-        <div class="tribe-selection">
-            <button id="creative" type="button">Creative Tribe</button>
-            <button id="tech" type="button">Tech Tribe</button>
-            <button id="business" type="button">Business Tribe</button>
-            <button id="impact" type="button">Impact Tribe</button>
-        </div>
-        <canvas id="gameCanvas" width="800" height="400"></canvas>
-        <div id="result"></div>
+    <h1>Tribe Battle Game</h1>
+    <button onclick="startGame('tech')">Tech Tribe</button>
+    <button onclick="startGame('creative')">Creative Tribe</button>
+    <button onclick="startGame('business')">Business Tribe</button>
+    <button onclick="startGame('impact')">Impact Tribe</button>
+
+    <div id="gameContainer"></div>
+
+    <div id="winnerMessage"></div>
+
+    <div class="control-buttons">
+        <button onclick="playerAttack()">Attack The Tech Tribe</button>
     </div>
-    <script src="script.js"></script>
+
+    <script>
+        const tribes = {
+            tech: { class: 'tech', health: 150, label: 'Tech Tribe', attackPower: 15, iconClass: 'tech-icon' },
+            creative: { class: 'creative', health: 100, label: 'Creative Tribe', attackPower: 1, iconClass: 'creative-icon' },
+            business: { class: 'business', health: 100, label: 'Business Tribe', attackPower: 2, iconClass: 'business-icon' },
+            impact: { class: 'impact', health: 100, label: 'Impact Tribe', attackPower: 2, iconClass: 'impact-icon' }
+        };
+
+        let player, opponent, opponentAttackInterval;
+
+        function startGame(tribe) {
+            const gameContainer = document.getElementById('gameContainer');
+            gameContainer.innerHTML = '';
+
+            if (tribe === 'tech') {
+                showCelebration();
+                return;
+            }
+
+            player = { ...tribes[tribe], element: createCharacter(tribes[tribe], 100, 300) };
+            opponent = { ...tribes.tech, element: createCharacter(tribes.tech, 600, 300) };
+
+            player.healthBar = createHealthBar(100, 260, player.iconClass);
+            opponent.healthBar = createHealthBar(600, 260, opponent.iconClass);
+
+            gameContainer.appendChild(player.element);
+            gameContainer.appendChild(player.healthBar);
+
+            gameContainer.appendChild(opponent.element);
+            gameContainer.appendChild(opponent.healthBar);
+
+            document.getElementById('winnerMessage').textContent = '';
+
+            startOpponentAttacks();
+        }
+
+        function createCharacter(tribe, x, y) {
+            const character = document.createElement('div');
+            character.className = `character ${tribe.class}`;
+            character.style.left = `${x}px`;
+            character.style.top = `${y}px`;
+            return character;
+        }
+
+        function createHealthBar(x, y, iconClass) {
+            const container = document.createElement('div');
+
+            const icon = document.createElement('div');
+            icon.className = `health-icon ${iconClass}`;
+            icon.style.left = `${x - 35}px`;
+            icon.style.top = `${y}px`;
+
+            const bar = document.createElement('div');
+            bar.className = 'health-bar';
+            bar.style.left = `${x}px`;
+            bar.style.top = `${y}px`;
+
+            container.appendChild(icon);
+            container.appendChild(bar);
+
+            return container;
+        }
+
+        function playerAttack() {
+            hit(opponent, player.attackPower);
+        }
+
+        function opponentAttack() {
+            hit(player, opponent.attackPower);
+        }
+
+        function hit(character, damage) {
+            character.health = Math.max(0, character.health - damage);
+
+            const explosion = createExplosion(character.element.style.left, character.element.style.top);
+            const gameContainer = document.getElementById('gameContainer');
+            gameContainer.appendChild(explosion);
+
+            setTimeout(() => explosion.remove(), 500);
+            character.healthBar.querySelector('.health-bar').style.width = `${character.health}px`;
+
+            checkWinner();
+        }
+
+        function createExplosion(x, y) {
+            const explosion = document.createElement('div');
+            explosion.className = 'explosion';
+            explosion.style.left = x;
+            explosion.style.top = y;
+            return explosion;
+        }
+
+        function checkWinner() {
+            const winnerMessage = document.getElementById('winnerMessage');
+
+            if (player.health <= 0) {
+                showWin();
+                clearGame();
+            } else if (opponent.health <= 0) {
+                showReluctantWin();
+                clearGame();
+            }
+        }
+
+        function startOpponentAttacks() {
+            opponentAttackInterval = setInterval(() => {
+                opponentAttack();
+            }, 2000);
+        }
+
+        function clearGame() {
+            clearInterval(opponentAttackInterval);
+        }
+
+        function showWin() {
+            const celebration = document.createElement('div');
+            celebration.className = 'celebration';
+            celebration.innerHTML = `
+                <h1 style="color: #f1c40f;">The Tech Tribe wins!</h1>
+                <div class="balloons">🎈🎈🎈</div>
+                <div class="glitter">✨✨✨</div>
+            `;
+            document.body.appendChild(celebration);
+        }
+        function showReluctantWin() {
+            const celebration = document.createElement('div');
+            celebration.className = 'celebration';
+            celebration.innerHTML = `
+                <h1 style="color: #f1c40f;">You win this time...!</h1>
+                <div class="balloons">😒😒😒</div>
+                <div class="glitter">✨✨✨</div>
+            `;
+            document.body.appendChild(celebration);
+        }
+
+        function showCelebration() {
+            const celebration = document.createElement('div');
+            celebration.className = 'celebration';
+            celebration.innerHTML = `
+                <h1 style="color: #f1c40f;">No need for a battle, the Tech Tribe always wins!</h1>
+                <div class="balloons">🎈🎈🎈</div>
+                <div class="glitter">✨✨✨</div>
+            `;
+            document.body.appendChild(celebration);
+        }
+        
+    </script>
 </body>
 </html>
