@@ -1,2 +1,2 @@
 # Tribe-War
-A rigged game to show the power of thTech Tribe
+A 'fair' game to show the power of the Tech Tribe
