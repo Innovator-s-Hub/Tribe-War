@@ -214,17 +214,19 @@
 </head>
 <body>
     <h1>Tribe Battle Game</h1>
-    <button onclick="startGame('tech')">Tech Tribe</button>
-    <button onclick="startGame('creative')">Creative Tribe</button>
-    <button onclick="startGame('business')">Business Tribe</button>
-    <button onclick="startGame('impact')">Impact Tribe</button>
+    <p style="font-size: 1.2rem; color: #ecf0f1; margin-top: 10px;">Choose your tribe...</p>
+
+    <button onclick="startGame('tech')" style="background-color: #3498db;">Tech Tribe</button>
+    <button onclick="startGame('creative')" style="background-color: #e74c3c;">Creative Tribe</button>
+    <button onclick="startGame('business')" style="background-color: #f1c40f;">Business Tribe</button>
+    <button onclick="startGame('impact')" style="background-color: #2ecc71;">Impact Tribe</button>
 
     <div id="gameContainer"></div>
 
     <div id="winnerMessage"></div>
 
     <div class="control-buttons">
-        <button onclick="playerAttack()">Attack The Tech Tribe</button>
+        <button onclick="playerAttack()" style="background-color: #e74c3c;">Attack The Tech Tribe</button>
     </div>
 
     <script>
