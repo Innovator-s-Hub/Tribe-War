@@ -42,7 +42,7 @@ p {
 }
 
 #click-message {
-  display: none; /* Hidden initially */
+  display: block; /* Change from none to block */
   font-size: 1.5rem;
   opacity: 0;
   animation: fadeIn 2s 4s forwards; /* Appears after the other elements */
